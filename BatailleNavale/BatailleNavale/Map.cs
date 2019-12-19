@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BatailleNavale
@@ -10,6 +11,18 @@ namespace BatailleNavale
     {
         const int size = 10;
         public int[,] tableauVide = {
+                    {0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0} };
+
+        public int[,] tableauFront = {
                     {0,0,0,0,0,0,0,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0},
@@ -46,6 +59,18 @@ namespace BatailleNavale
                     {null,null,null,null,null,null,null,null,null,null}};
 
         public int[,] tableauValeur;
+
+        public int[,] TableauFront
+        {
+            get { return tableauFront; }
+            set { tableauFront = value; }
+        }
+
+        public int[,] TableauVide
+        {
+            get { return tableauVide; }
+            set { tableauVide = value; }
+        }
 
         public int[,] TableauValeur
         {
@@ -132,7 +157,7 @@ namespace BatailleNavale
                 }
             }
             if (possible == true) placerBateau(taille, u, v, rotation);
-            else Console.WriteLine("Erreur de placement !");
+            else { Console.WriteLine("Erreur de placement !");Thread.Sleep(350); }
             return possible;
         }
         private void attributionCarte(Bateau[,] table) //Pour l'IA sans vérification
@@ -162,6 +187,7 @@ namespace BatailleNavale
         {
             Console.WriteLine("Carte actuelle du joueur " + target.name + " :");
             Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("    0 1 2 3 4 5 6 7 8 9");
             Console.WriteLine("");
             for (int j = 0; j < size; j++)
@@ -171,8 +197,30 @@ namespace BatailleNavale
                 Console.Write("  |");
                 for (int i = 0; i < size; i++)
                 {
-                    Console.Write(table[j, i] + "|");
+                    if (table[j, i] == 8)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(table[j, i]);
+                    }
+                    else if (table[j, i] == 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.Write(table[j, i]);
+                    }
+                    else if (table[j, i] == 7)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(table[j, i]);
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write(table[j, i]);
+                    }
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("|");
                 }
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(" ");
             }
             Console.WriteLine(" ");

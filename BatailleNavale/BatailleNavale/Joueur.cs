@@ -45,7 +45,8 @@ namespace BatailleNavale
 
         public void displayMap()
         {
-            carte.afficherCarte(carte.TableauValeur, this);
+            if (isHuman == true) carte.afficherCarte(carte.TableauValeur, this);
+            else carte.afficherCarte(carte.TableauFront, this);
         }
 
         //DEPLOYEMENT
@@ -89,7 +90,7 @@ namespace BatailleNavale
                         }
                     }
                 }
-                Thread.Sleep(500);
+                //Thread.Sleep(500);
                 Console.Clear();
             }
         }
@@ -98,7 +99,13 @@ namespace BatailleNavale
         {
             int w;
             Console.Write("Choisisez le sens du bateau [le point d'ancrage est en haut à gauche] (0 = horizontal / 1 = vertical) : ");
-            w = int.Parse(Console.ReadLine());
+            try
+            {
+                w = int.Parse(Console.ReadLine());
+            }catch (FormatException e)
+            {
+                w = int.Parse(Console.ReadLine());
+            }
             while (w < 0 || w > 1)
             {
                 Console.Write("Valeur impossible ! ");
@@ -107,11 +114,17 @@ namespace BatailleNavale
             }
             return w;
         }
-        private int coordInput(string thing)
+        public int coordInput(string thing)
         {
             int v;
-            Console.Write(thing + " : "); 
-            v = int.Parse(Console.ReadLine());
+            Console.Write(thing + " : ");
+            try
+            {
+                v = int.Parse(Console.ReadLine());
+            }catch (FormatException e)
+            {
+                v = int.Parse(Console.ReadLine());
+            }
             while(v < 0 || v > 9)
             {
                 Console.Write("Valeur impossible ! ");

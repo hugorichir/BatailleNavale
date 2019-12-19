@@ -13,7 +13,7 @@ namespace BatailleNavale
             //Initialiser
             Init();
             string nickname = Console.ReadLine();
-            Console.WriteLine("");
+            Console.Clear();
             Joueur humain = new Joueur(nickname);
             Joueur ordinateur = new Joueur();
 
@@ -21,28 +21,25 @@ namespace BatailleNavale
             humain.deployement();
             //Début de game (tirage au sort + tour par tour)
             Combat fight = new Combat(humain, ordinateur);
-            while (humain.lifeRemaining > 1 || ordinateur.lifeRemaining > 1)
+            fight.NextStep();
+            while (humain.lifeRemaining > 0 && ordinateur.lifeRemaining > 0)
             {
+                Console.Clear();
                 if (fight.tirage == true) {
-                    //fight.Tir(ordinateur);
-                    fight.Tir(humain);
-                    humain.displayMap();
-                    Thread.Sleep(250);
-                    Console.Clear();
+                    PhaseTir(true, humain, ordinateur, fight);
+                    PhaseTir(false, humain, ordinateur, fight);
                 }
                 else
                 {
-                    fight.Tir(humain);
-                    //fight.Tir(ordinateur);
-                    humain.displayMap();
-                    Thread.Sleep(250);
-                    Console.Clear();
+                    PhaseTir(false, humain, ordinateur, fight);
+                    PhaseTir(true, humain, ordinateur, fight);
                 }
             }
             //Vérification de qui a gagné
+            Console.WriteLine(" ");
             if (ordinateur.lifeRemaining == 0) Console.WriteLine("Vous etes le VAINQUER ! CONGRATULATION !");
             else Console.WriteLine("Vous etes PERDANT ! SHAME ON YOU !");
-            Console.WriteLine("Appuyez sur une touche pour quiter !");
+            Console.WriteLine("Appuyez sur entrée pour quiter !");
             Console.ReadLine();
         }
 
@@ -52,6 +49,25 @@ namespace BatailleNavale
             Console.WriteLine("Get ready 4 ze battle!");
             Console.WriteLine("");
             Console.Write("Entre ici ton pseudo : ");
+        }
+
+        public static void PhaseTir(bool vivant, Joueur jPlayer, Joueur jOrdi, Combat game)
+        {
+            if(vivant == true)
+            {
+                //Tir Humain
+                jOrdi.displayMap();
+                game.Tir(jOrdi);
+                jOrdi.displayMap();
+                game.NextStep();
+            }
+            else
+            {
+                //Tir IA
+                game.Tir(jPlayer);
+                jPlayer.displayMap();
+                game.NextStep();
+            }
         }
     }
 }
