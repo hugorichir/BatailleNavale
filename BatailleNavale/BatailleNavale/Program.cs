@@ -19,8 +19,30 @@ namespace BatailleNavale
 
             //Placement bateau du Joueur + Selection carte pour IA
             humain.deployement();
-            //Début de game (pile ou face pour savoir qui commence)
-            //Phase de tire tour par tour until plus de vie
+            //Début de game (tirage au sort + tour par tour)
+            Combat fight = new Combat(humain, ordinateur);
+            while (humain.lifeRemaining > 1 || ordinateur.lifeRemaining > 1)
+            {
+                if (fight.tirage == true) {
+                    //fight.Tir(ordinateur);
+                    fight.Tir(humain);
+                    humain.displayMap();
+                    Thread.Sleep(250);
+                    Console.Clear();
+                }
+                else
+                {
+                    fight.Tir(humain);
+                    //fight.Tir(ordinateur);
+                    humain.displayMap();
+                    Thread.Sleep(250);
+                    Console.Clear();
+                }
+            }
+            //Vérification de qui a gagné
+            if (ordinateur.lifeRemaining == 0) Console.WriteLine("Vous etes le VAINQUER ! CONGRATULATION !");
+            else Console.WriteLine("Vous etes PERDANT ! SHAME ON YOU !");
+            Console.WriteLine("Appuyez sur une touche pour quiter !");
             Console.ReadLine();
         }
 

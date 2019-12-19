@@ -21,6 +21,18 @@ namespace BatailleNavale
                     {0,0,0,0,0,0,0,0,0,0},
                     {0,0,0,0,0,0,0,0,0,0} };
 
+        public Bateau[,] tableauBateauVide = {
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null}};
+
         public Bateau[,] tableau1 = {
                     {null,null,null,null,null,null,null,null,null,null},
                     {null,new Bateau(2, true),null,null,null,null,null,null,null,new Bateau(5, true)},
@@ -34,7 +46,6 @@ namespace BatailleNavale
                     {null,null,null,null,null,null,null,null,null,null}};
 
         public int[,] tableauValeur;
-        Bateau[,] tableauBateau = new Bateau[size, size];
 
         public int[,] TableauValeur
         {
@@ -44,8 +55,8 @@ namespace BatailleNavale
  
         public Bateau[,] TableauBateau
         {
-            get { return tableauBateau; }
-            set { tableauBateau = value; }
+            get { return tableauBateauVide; }
+            set { tableauBateauVide = value; }
         }
 
         public Map(Joueur target)
@@ -74,8 +85,57 @@ namespace BatailleNavale
                 }
             }
         }
-
-        private void attributionCarte(Bateau[,] table)
+        private void placerBateau(int taille, int u, int v, int rotation)
+        {
+            for (int i = 0; i < taille; i++)
+            {
+                if (rotation == 1) //Horizontal
+                {
+                    tableauValeur[u+i, v] = taille;
+                }
+                if (rotation == 0) //Vertical
+                {
+                    tableauValeur[u, i+v] = taille;
+                }
+            }
+        }
+        public bool verifierBateau(int taille, int u, int v, int rotation)
+        {
+            bool possible = true;
+            for (int i = 0; i < taille; i++)
+            {
+                try
+                {
+                    if (tableauValeur[u + i, v] != 0)
+                    {
+                        possible = false;
+                    }
+                }
+                catch (IndexOutOfRangeException e)
+                {
+                    possible = false;
+                    break;
+                }
+                if (rotation == 0) //Vertical
+                {
+                    try
+                    {
+                        if (tableauValeur[u, v + i] != 0)
+                        {
+                            possible = false;
+                        }
+                    }catch (IndexOutOfRangeException e)
+                    {
+                        possible = false;
+                        break;
+                    }
+                }
+            }
+            if (possible == true) placerBateau(taille, u, v, rotation);
+            else Console.WriteLine("Erreur de placement !");
+            return possible;
+        }
+        private void attributionCarte(Bateau[,] table) //Pour l'IA sans vérification
         {
             int rotation = 0;
             for (int j = 0; j < size; j++)

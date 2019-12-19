@@ -8,11 +8,11 @@ namespace BatailleNavale
 {
     class Joueur
     {
-        int lifeRemaining;
+        public int lifeRemaining;
         bool isHuman;
         public string name;
         public List<Bateau> floteInnactive;
-        Map carte;
+        public Map carte;
 
         public bool Gender
         {
@@ -48,9 +48,10 @@ namespace BatailleNavale
             carte.afficherCarte(carte.TableauValeur, this);
         }
 
+        //DEPLOYEMENT
         public void deployement()
         {
-            int x,y;
+            int x ,y;
             int choixSens;
             int compteur = -1;
             int choixBato;
@@ -76,12 +77,13 @@ namespace BatailleNavale
                         compteur++;
                         if (bato.size == choixBato)
                         {
-                            floteInnactive.RemoveAt(compteur);
                             //Choix des coordonnées et du sens
-                            Console.WriteLine("Choisisez les coordonnées {Format = x,y} : ");
-                            Console.Write("x : "); x = int.Parse(Console.ReadLine()); Console.Write("y : "); y = int.Parse(Console.ReadLine());
-                            Console.Write("Choisisez le sens du bateau [le point d'ancrage est en haut à gauche] (1 = vertical / 0 = horizontal) : "); choixSens = int.Parse(Console.ReadLine());
-                            carte.tableauValeur[x, y] = 1;
+                            y = coordInput("x"); x = coordInput("y"); choixSens = sensInput("Sens");
+                            //Vérification si ça passe sur la carte
+                            if(carte.verifierBateau(bato.size, x,y,choixSens) == true)
+                            {
+                                floteInnactive.RemoveAt(compteur);
+                            }
                             compteur = -1;
                             break;
                         }
@@ -90,6 +92,33 @@ namespace BatailleNavale
                 Thread.Sleep(500);
                 Console.Clear();
             }
+        }
+
+        private int sensInput(string thing)
+        {
+            int w;
+            Console.Write("Choisisez le sens du bateau [le point d'ancrage est en haut à gauche] (0 = horizontal / 1 = vertical) : ");
+            w = int.Parse(Console.ReadLine());
+            while (w < 0 || w > 1)
+            {
+                Console.Write("Valeur impossible ! ");
+                Console.Write(thing + " : ");
+                w = int.Parse(Console.ReadLine());
+            }
+            return w;
+        }
+        private int coordInput(string thing)
+        {
+            int v;
+            Console.Write(thing + " : "); 
+            v = int.Parse(Console.ReadLine());
+            while(v < 0 || v > 9)
+            {
+                Console.Write("Valeur impossible ! ");
+                Console.Write(thing + " : ");
+                v = int.Parse(Console.ReadLine());
+            }
+            return v;
         }
         private void displayListBato()
         {
@@ -101,7 +130,6 @@ namespace BatailleNavale
             }
             Console.WriteLine(" ");
         }
-
         private bool bateauDispo(int numero)
         {
             bool result = false;

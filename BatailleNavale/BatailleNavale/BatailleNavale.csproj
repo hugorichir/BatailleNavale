@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bateau.cs" />
+    <Compile Include="Combat.cs" />
     <Compile Include="Joueur.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Program.cs" />

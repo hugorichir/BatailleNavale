@@ -22,8 +22,6 @@ namespace BatailleNavale
             get { return rotation; }
             set { rotation = value; }
         }
-
-
         public Bateau(int lenght, bool sens)
         {
             size = lenght;
