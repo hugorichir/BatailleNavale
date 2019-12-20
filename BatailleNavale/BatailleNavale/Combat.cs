@@ -30,11 +30,63 @@ namespace BatailleNavale
             int x, y;
             var rand = new Random();
             //Coté IA
-            if(target.name != "Computer")
+            if (target.name != "Computer")
             {
-                x = rand.Next(0, 10);
-                y = rand.Next(0, 10);
+                do
+                {
+                    x = rand.Next(0, 10);
+                    y = rand.Next(0, 10);
 
+                    if (target.touchedLast == true && target.caseAutour < 4)
+                    {
+                        switch (target.caseAutour)
+                        {
+                            case 0:
+                                //HAUT
+                                if(target.yLast < 10) { 
+                                x = target.xLast;
+                                y = target.yLast+1;
+                                }
+                                target.caseAutour++;
+                                break;
+                            case 1:
+                                //BAS
+                                if (target.yLast > 0)
+                                {
+                                    x = target.xLast;
+                                    y = target.yLast - 1;
+                                }
+                                target.caseAutour++;
+                                break;
+                            case 2:
+                                //GAUCHE
+                                if (target.xLast > 0)
+                                {
+                                    x = target.xLast - 1;
+                                    y = target.yLast;
+                                }
+                                target.caseAutour++;
+                                break;
+                            case 3:
+                                //DROITE
+                                if (target.xLast < 10)
+                                {
+                                    x = target.xLast + 1;
+                                    y = target.yLast;
+                                }
+                                target.caseAutour++;
+                                break;
+                            default:
+                                x = target.xLast;
+                                y = target.yLast;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        target.caseAutour = 0;
+                    }
+                } while (target.carte.tableauValeur[x, y] > 6);
                 //AMELIORER l'IA --> Ne peux pas tirer sur case déjà tiré
 
                 if (target.carte.tableauValeur[x, y] > 0 && target.carte.tableauValeur[x, y] < 6)
@@ -44,6 +96,9 @@ namespace BatailleNavale
                     Console.WriteLine("L'IA à touché votre : " + kindOfBoat(target.carte.tableauValeur[x, y]));
                     target.carte.tableauValeur[x, y] = 8;
                     target.lifeRemaining--;
+                    target.touchedLast = true;
+                    target.xLast = x;
+                    target.yLast = y;
                     //Console.WriteLine("DEBUG : " + x + "/" + y + " --> " + target.carte.tableauValeur[x, y] + " Vie : " + target.lifeRemaining);
                 }
                 else
@@ -51,6 +106,7 @@ namespace BatailleNavale
                     if(target.carte.tableauValeur[x, y] == 0) target.carte.tableauValeur[x, y] = 7;
                     Console.Clear();
                     Console.WriteLine("Plouff l'IA a loupé quelle grosse merde !");
+                    target.touchedLast = false;
                 }
             }
             else //Coté Humain
@@ -69,6 +125,7 @@ namespace BatailleNavale
                     Console.WriteLine("Touché ! En plein sur son " + kindOfBoat(target.carte.TableauValeur[x, y]));
                     target.carte.TableauVide[x, y] = 8;
                     target.carte.TableauFront[x, y] = 8;
+                    target.lifeRemaining--;
                 }
                 else
                 {

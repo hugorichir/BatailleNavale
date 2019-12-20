@@ -13,6 +13,10 @@ namespace BatailleNavale
         public string name;
         public List<Bateau> floteInnactive;
         public Map carte;
+        //Variables pour l'IA avancé
+        public bool touchedLast;
+        public int caseAutour;
+        public int xLast, yLast;
 
         public bool Gender
         {
@@ -25,6 +29,8 @@ namespace BatailleNavale
             lifeRemaining = 18;
             isHuman = true;
             name = nom;
+            touchedLast = false;
+            caseAutour = 0;
             carte = new Map(this);
             floteInnactive = new List<Bateau>();
             floteInnactive.Add(new Bateau(5, true));

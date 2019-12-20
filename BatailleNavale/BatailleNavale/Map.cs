@@ -58,6 +58,30 @@ namespace BatailleNavale
                     {null,new Bateau(1, true),null,null,null,null,null,null,null,null},
                     {null,null,null,null,null,null,null,null,null,null}};
 
+        public Bateau[,] tableau2 = {
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,new Bateau(2, true),null,null,null,new Bateau(3, false),null,null,null,null},
+                    {null,null,null,new Bateau(4, true),null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,new Bateau(2, true),null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,new Bateau(1, true),null,null,null,null},
+                    {new Bateau(5, false),null,null,null,null,null,null,null,new Bateau(1, true),null}};
+
+        public Bateau[,] tableau3 = {
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,new Bateau(3, true),null,null,null,null,null,null,new Bateau(5, true), null},
+                    {null,null,new Bateau(1, true), null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,new Bateau(1, false),null,null,null,null,null},
+                    {null,null,null,null,new Bateau(2, true),null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,new Bateau(2, false),null,null,null,new Bateau(1, false),null},
+                    {null,null,null,null,null,null,null,null,null,null},
+                    {null,null,null,null,null,null,null,null,null,null}};
+
         public int[,] tableauValeur;
 
         public int[,] TableauFront
@@ -99,13 +123,18 @@ namespace BatailleNavale
                 int choix;
                 var rand = new Random();
                 //Choix aléatoire du niveau
-                choix = rand.Next(1, 6);
-                choix = 1;
+                choix = rand.Next(1, 4);
                 //Atribution du niveau et traduction de bateau à chiffre
                 switch (choix = 1)
                 {
                     case 1:
                         attributionCarte(tableau1);
+                        break;
+                    case 2:
+                        attributionCarte(tableau2);
+                        break;
+                    case 3:
+                        attributionCarte(tableau3);
                         break;
                 }
             }
