@@ -22,6 +22,7 @@ namespace BatailleNavale
             //Début de game (tirage au sort + tour par tour)
             Combat fight = new Combat(humain, ordinateur);
             fight.NextStep();
+            //PHASE DE GAME
             while (humain.lifeRemaining > 0 && ordinateur.lifeRemaining > 0)
             {
                 Console.Clear();

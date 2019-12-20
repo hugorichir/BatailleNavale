@@ -24,7 +24,7 @@ namespace BatailleNavale
             if (tirage == true) Console.WriteLine("Oui !");
             else Console.WriteLine("Non ! L'ordinateur commence !");
         }
-    
+        //TIR durant le COMBAT
         public void Tir(Joueur target)
         {
             int x, y;
@@ -36,7 +36,7 @@ namespace BatailleNavale
                 {
                     x = rand.Next(0, 10);
                     y = rand.Next(0, 10);
-
+                    //IA un peu avancé, tendance à tirer autour des cases touchés
                     if (target.touchedLast == true && target.caseAutour < 4)
                     {
                         switch (target.caseAutour)
@@ -87,10 +87,9 @@ namespace BatailleNavale
                         target.caseAutour = 0;
                     }
                 } while (target.carte.tableauValeur[x, y] > 6);
-                //AMELIORER l'IA --> Ne peux pas tirer sur case déjà tiré
-
+                //CHOIX DE LA CASE SUR LAQUELLE TIRER
                 if (target.carte.tableauValeur[x, y] > 0 && target.carte.tableauValeur[x, y] < 6)
-                {
+                {//TOUCHÉ 
                     Console.Clear();
                     Console.Write("Touché ! ");
                     Console.WriteLine("L'IA à touché votre : " + kindOfBoat(target.carte.tableauValeur[x, y]));
@@ -102,7 +101,7 @@ namespace BatailleNavale
                     //Console.WriteLine("DEBUG : " + x + "/" + y + " --> " + target.carte.tableauValeur[x, y] + " Vie : " + target.lifeRemaining);
                 }
                 else
-                {
+                {//FAIL
                     if(target.carte.tableauValeur[x, y] == 0) target.carte.tableauValeur[x, y] = 7;
                     Console.Clear();
                     Console.WriteLine("Plouff l'IA a loupé quelle grosse merde !");
@@ -111,6 +110,7 @@ namespace BatailleNavale
             }
             else //Coté Humain
             {
+                //CHOIX DE LA CASE SUR LAQUELLE TIRER
                 Console.WriteLine("Choisissez où vous voulez tirer ! ");
                 y = target.coordInput("x"); x = target.coordInput("y");
                 while(target.carte.TableauValeur[x, y] > 6)
@@ -118,7 +118,7 @@ namespace BatailleNavale
                     Console.WriteLine("Vous avez déjà tiré ici :");
                     y = target.coordInput("x"); x = target.coordInput("y");
                 }
-
+                //TOUCHÉ 
                 if (target.carte.TableauValeur[x,y] != 0 && target.carte.TableauValeur[x, y] != 7)
                 {
                     Console.Clear();
@@ -128,7 +128,7 @@ namespace BatailleNavale
                     target.lifeRemaining--;
                 }
                 else
-                {
+                { //FAIL
                     Console.Clear();
                     Console.WriteLine("Raté ! Plouufff mon gars, dans ta...l'eau");
                     target.carte.TableauVide[x, y] = 7;
@@ -136,7 +136,7 @@ namespace BatailleNavale
                 }
             }
         }
-
+        
         private string kindOfBoat(int value)
         {
             string name;
@@ -163,7 +163,7 @@ namespace BatailleNavale
             }
             return name;
         }
-
+        //PAUSE POUR L'HUMAIN
         public void NextStep()
         {
             Console.WriteLine("Appuyez sur entrée pour passer à l'étape suivante");

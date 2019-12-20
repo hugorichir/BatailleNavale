@@ -46,6 +46,7 @@ namespace BatailleNavale
                     {null,null,null,null,null,null,null,null,null,null},
                     {null,null,null,null,null,null,null,null,null,null}};
 
+        //CARTE ALEATOIRE POUR L'IA
         public Bateau[,] tableau1 = {
                     {null,null,null,null,null,null,null,null,null,null},
                     {null,new Bateau(2, true),null,null,null,null,null,null,null,new Bateau(5, true)},
@@ -139,6 +140,7 @@ namespace BatailleNavale
                 }
             }
         }
+        //PLACE LE BATEAU SUR LA CARTE
         private void placerBateau(int taille, int u, int v, int rotation)
         {
             for (int i = 0; i < taille; i++)
@@ -153,6 +155,7 @@ namespace BatailleNavale
                 }
             }
         }
+        //VÉRIFICATION QUE LE BATEAU PEUX SE LOGER LA
         public bool verifierBateau(int taille, int u, int v, int rotation)
         {
             bool possible = true;
@@ -189,6 +192,7 @@ namespace BatailleNavale
             else { Console.WriteLine("Erreur de placement !");Thread.Sleep(350); }
             return possible;
         }
+        //PLACEMENT BATEAU POUR L'IA
         private void attributionCarte(Bateau[,] table) //Pour l'IA sans vérification
         {
             int rotation = 0;

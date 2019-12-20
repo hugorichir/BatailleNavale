@@ -23,7 +23,7 @@ namespace BatailleNavale
             get { return isHuman; }
             set { isHuman = value; }
         }
-
+        //CONSTRUCTEUR HUMAIN
         public Joueur(string nom)
         {
             lifeRemaining = 18;
@@ -41,6 +41,7 @@ namespace BatailleNavale
             floteInnactive.Add(new Bateau(1, true));
             floteInnactive.Add(new Bateau(1, true));
         }
+        //CONSTRUCTEUR IA
         public Joueur()
         {
             lifeRemaining = 18;
@@ -48,14 +49,14 @@ namespace BatailleNavale
             name = "Computer";
             carte = new Map(this);
         }
-
+        //AFFICHER CARTE
         public void displayMap()
         {
             if (isHuman == true) carte.afficherCarte(carte.TableauValeur, this);
             else carte.afficherCarte(carte.TableauFront, this);
         }
 
-        //DEPLOYEMENT
+        //DEPLOYEMENT DES BATEAU
         public void deployement()
         {
             int x ,y;
@@ -100,7 +101,7 @@ namespace BatailleNavale
                 Console.Clear();
             }
         }
-
+        //CHOIX DU SENS DU BATEAU
         private int sensInput(string thing)
         {
             int w;
@@ -120,6 +121,7 @@ namespace BatailleNavale
             }
             return w;
         }
+        //CHOIX DES COORDONNÉES
         public int coordInput(string thing)
         {
             int v;
@@ -139,6 +141,7 @@ namespace BatailleNavale
             }
             return v;
         }
+        //LISTE DE BATEAU
         private void displayListBato()
         {
             Console.WriteLine("Il vous reste :");
@@ -149,6 +152,7 @@ namespace BatailleNavale
             }
             Console.WriteLine(" ");
         }
+        //VÉRIF SI BATEAU PRÉSENT
         private bool bateauDispo(int numero)
         {
             bool result = false;

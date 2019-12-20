@@ -22,6 +22,7 @@ namespace BatailleNavale
             get { return rotation; }
             set { rotation = value; }
         }
+        //CONSTRUCTEUR
         public Bateau(int lenght, bool sens)
         {
             size = lenght;
@@ -44,12 +45,6 @@ namespace BatailleNavale
                     name = "Aircraft Carrier";
                     break;
             }
-        }
-
-        public Bateau()
-        {
-            //Constructeur Vide
-            size = 0;
         }
     }
 }
